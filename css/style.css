@@ -43,3 +43,8 @@ a:hover{
     color: rgb(71, 7, 7);
     text-decoration: underline;
 }
+td{
+    
+    text-align: center;
+    font-size: .7em;
+}
