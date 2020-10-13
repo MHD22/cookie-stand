@@ -3,11 +3,14 @@ body{
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: black;
     margin: 0;
-    padding: 5px;
+    padding: 0;
     font-size: 1.1em;
     line-height: 1.5em;
-    background-color: rgba(209, 238, 248, 0.849);
+    background-color: #7e6a6c62;
     
+}
+body.index{
+    background-color: #DAD9D3;
 }
 section{
     display: inline-block; 
@@ -23,6 +26,9 @@ section p,h1{
 h1{
     font-family: 'Josefin Sans', sans-serif;
     color: rgb(71, 7, 7);
+    text-align: center;
+    font-size: 2em;
+    margin-top: 50px;
 }
 section ul{
     font-family:Arial, Helvetica, Verdana, 'Geneva', Tahoma, sans-serif;
@@ -43,8 +49,49 @@ a:hover{
     color: rgb(71, 7, 7);
     text-decoration: underline;
 }
-td{
-    
+td,th{
+    padding: 7px;
     text-align: center;
-    font-size: .7em;
+    font-size: 1em;
+}
+img{
+    width: 30%;
+    height: 200px;
+    margin: 10px;
+    box-shadow: 1px 2px 2px 2px gray;
+    border-radius: 10%;
+}
+.item{
+    width: 100%;
+    padding:0;
+    margin:0;
+    text-align: center;
+}
+
+.img-container{
+    padding:25px;
+    margin-top: 150px;
+    background-color: #dad9d3bd;
+    border-radius: 20px;
+    width: 55%;
+    margin: auto;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    box-shadow: 1px 2px 2px 4px #4b3f4188;
+}
+.text-container{
+    width: 55%;
+    margin: auto ;
+    text-align: center;
+    font-size: 1.4em;
+    line-height: 1.4em;
+    color: #5f4a4c;
+}
+nav{
+    background-color: #645455;
+    margin: 0;
+    position: sticky;
+    top: 0;
 }

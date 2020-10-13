@@ -62,7 +62,9 @@ Shop.prototype.render = function () {
     else {  // add number of cookies saled each hour
       var colData = document.createElement('td');
       rowLocation.appendChild(colData);
-      colData.textContent = this.cookiesSaledArray[i - 1];
+      var string = this.cookiesSaledArray[i - 1];
+      string=string.slice((string.indexOf(':')+1)); // to print cut the hours from the output : instead of ( 6am: 20 cookies) => 20 cookies
+      colData.textContent = string;
     }
 
   }
