@@ -1,15 +1,18 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
-function getRandom(max, min) { // calculate a randome integer number within a range.
+// calculate a randome integer number within a range.
+function getRandom(max, min) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
 //to storing the all totals for each hour.
-var allTotalsForEachHour = new Array(15).fill(0);// initilaize it with zeroes.
+var allTotalsForEachHour = new Array(15).fill(0);// initilaize it with zeroes. == [0,0,0,0, ...]
 
 var shops = []; // to store the objects inside it.
+
 
 //create constructor for shops/locations:
 function Shop(location, minCustomer, maxCoustomer, avgCookiesPerCoust) {
@@ -22,6 +25,7 @@ function Shop(location, minCustomer, maxCoustomer, avgCookiesPerCoust) {
   shops.push(this);//store this object in the shops array.
 }
 
+
 //create prototypes:
 
 // prototype for calculate and store the data for each location in its array (cookiesSaledArray).
@@ -30,22 +34,26 @@ Shop.prototype.storeDataPerHour = function () {
 
     var random = getRandom(this.maxCoust, this.minCoust); // calculate random customers per hour
 
-    var cookiesSaledPerHour = Math.floor(random * this.avgCookies); //  cookies purchased for each hour 
+    var cookiesSaledPerHour = Math.floor(random * this.avgCookies); //  cookies purchased for each hour
 
     this.total += cookiesSaledPerHour; // total for location.
 
     this.cookiesSaledArray.push(`${hours[i]}: ${cookiesSaledPerHour} cookies`); // save data like this format '6am: 16 cookies'
 
-    allTotalsForEachHour[i] += cookiesSaledPerHour;//store the total of all locations each hour..
-  }
+    allTotalsForEachHour[i] += cookiesSaledPerHour;//store the hourly total of all locations.
+  }//end of for
 
-  allTotalsForEachHour[i] += this.total; // add the total for all locations each day
+  allTotalsForEachHour[i] += this.total; // add the daily total for all locations.
+
 };
 
 // prototype for render each location in a row
 Shop.prototype.render = function () {
   var rowLocation = document.createElement('tr'); //create  a row element for each object.
-  for (var i = 0; i < hours.length + 2; i++) { //loop over columns (16) 14 for hours + 1 for location name and 1 for total
+
+
+  //loop over columns (16) 14 for hours + 1 for location name and 1 for total
+  for (var i = 0; i < hours.length + 2; i++) {
 
     if (i === 0) { // check for first cell (location name)
       var colData = document.createElement('th');
@@ -54,13 +62,13 @@ Shop.prototype.render = function () {
     }
 
     else if (i === hours.length + 1) { // check for last cell (Daily Location Total)
-      var colData = document.createElement('td');
+      colData = document.createElement('td');
       rowLocation.appendChild(colData);
       colData.textContent = this.total;
     }
 
-    else {  // add number of cookies saled each hour
-      var colData = document.createElement('td');
+    else { // add number of cookies saled each hour.
+      colData = document.createElement('td');
       rowLocation.appendChild(colData);
       var string = this.cookiesSaledArray[i - 1];
       string=string.slice((string.indexOf(':')+1)); // to print cut the hours from the output : instead of ( 6am: 20 cookies) => 20 cookies
@@ -70,10 +78,11 @@ Shop.prototype.render = function () {
   }
   table.appendChild(rowLocation); // append the table with this location row
 
-};
+};// end of render prototype.
+
 
 //DOM
-var container = document.getElementById('sales');// get main element from html to append it with the table at the end.
+var container = document.getElementById('sales');// get main element from sales.html to append it with the table at the end.
 var table = document.createElement('table');//create table element to hold the data.
 table.setAttribute('border', '1');// set the border attribute to the table.
 container.appendChild(table);// append the main tag with table tag.
@@ -91,12 +100,12 @@ function renderTableHeader() { // to create the first row and append the table w
     }
 
     else if (i === hours.length + 1) { // check for last cell (Daily Location Total)
-      var colData = document.createElement('th');
+      colData = document.createElement('th');
       rowHeader.appendChild(colData);
       colData.textContent = 'Daily Location Total';
     }
-    else {  // add hours to cells
-      var colData = document.createElement('th');
+    else { // add hours to cells
+      colData = document.createElement('th');
       rowHeader.appendChild(colData);
       colData.textContent = hours[i - 1]; // because will start print hours from second cell..
     }
@@ -104,14 +113,16 @@ function renderTableHeader() { // to create the first row and append the table w
   }
   table.appendChild(rowHeader); //append the table with this header row
 
-}
+}//end of renderTableHeader.
 
-var rowFooter;// made it global for use it inside the event listener 'submit'.
+
+
+var rowFooter;// declared as global, for use it inside the event listener 'submit'.
 
 function renderTableFooter() {// to create the last row and append the table with it.
   rowFooter = document.createElement('tr');
 
-  for (var i = 0; i < hours.length + 2; i++) { //loop over columns (16) 
+  for (var i = 0; i < hours.length + 2; i++) { //loop over columns (16)
 
     if (i === 0) { // check for first cell (empty)
       var colData = document.createElement('th');
@@ -119,15 +130,17 @@ function renderTableFooter() {// to create the last row and append the table wit
       colData.textContent = 'Totals';
     }
 
-    else {  // add totals to remain cells
-      var colData = document.createElement('th');
+
+    else { // add totals to remain cells
+      colData = document.createElement('th');
       rowFooter.appendChild(colData);
       colData.textContent = allTotalsForEachHour[i - 1];
     }
 
   }
   table.appendChild(rowFooter);
-}
+
+}//end of renderTableFooter
 
 
 //create instances from Shop constructor:
@@ -140,31 +153,37 @@ var tokyo = new Shop('Tokyo', 3, 24, 1.2);
 
 
 //add objects from the users' input into the form:
-//event listener to form 
+
 var branchForm = document.getElementById('branchForm');
+
+//add event listener to form
 // when the form is submitted, it will create a new Shop object.(after the validation of data).
-branchForm.addEventListener('submit', (event)=> { 
-    event.preventDefault();
-    var form = event.target;
-    var locationName= form.loc.value;
-    var minCust =Number(form.min.value);
-    var maxCust = Number(form.max.value);
-    var avgCookies =parseFloat( form.avg.value);
+branchForm.addEventListener('submit', (event)=> {
 
-    // input validation:
-    if(minCust < 0 || maxCust<=0 || minCust >= maxCust ){ 
-      alert(`Something was wrong! \n* don't enter a negative number for min or max \n* the max number should be greater than zero \n* finally the min can't be greater than max \n \n - check these conditions, and try to submit again, please.`);
-    }
 
-    else{ //if everything valid..
+  event.preventDefault();//to prevent reloading the page each time the form is submitted.
+  var form = event.target;
+  var locationName= form.loc.value; //get the value of input which its id is 'loc'
+  var minCust =Number(form.min.value);
+  var maxCust = Number(form.max.value);
+  var avgCookies = parseFloat( form.avg.value);
 
-      var newShop = new Shop(locationName, minCust, maxCust, avgCookies);
-      table.removeChild(rowFooter);
-      newShop.storeDataPerHour();
-      newShop.render();
-      renderTableFooter();
-    }
-    form.reset();     
+
+  // input validation:
+  if(minCust < 0 || maxCust <= 0 || minCust >= maxCust ){
+    alert('Something was wrong! \n* don\'t enter a negative number for min or max \n* the max number should be greater than zero \n* finally the min can\'t be greater than max \n \n - check these conditions, and try to submit again, please.');
+  }
+
+
+  else{ //if everything valid..
+
+    var newShop = new Shop(locationName, minCust, maxCust, avgCookies);
+    table.removeChild(rowFooter); //remove the footer to add the new row befor it.
+    newShop.storeDataPerHour();
+    newShop.render();
+    renderTableFooter(); //add the footer again.
+  }
+  form.reset();
 });
 
 
