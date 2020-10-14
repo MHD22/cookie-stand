@@ -17,7 +17,7 @@ function Shop(location, minCustomer, maxCoustomer, avgCookiesPerCoust) {
   this.minCoust = minCustomer;
   this.maxCoust = maxCoustomer;
   this.avgCookies = avgCookiesPerCoust;
-  this.cookiesSaledArray = []
+  this.cookiesSaledArray = [];
   this.total = 0;
   shops.push(this);//store this object in the shops array.
 }
@@ -40,7 +40,7 @@ Shop.prototype.storeDataPerHour = function () {
   }
 
   allTotalsForEachHour[i] += this.total; // add the total for all locations each day
-}
+};
 
 // prototype for render each location in a row
 Shop.prototype.render = function () {
@@ -70,9 +70,9 @@ Shop.prototype.render = function () {
   }
   table.appendChild(rowLocation); // append the table with this location row
 
-}
+};
 
-//DOM 
+//DOM
 var container = document.getElementById('sales');// get main element from html to append it with the table at the end.
 var table = document.createElement('table');//create table element to hold the data.
 table.setAttribute('border', '1');// set the border attribute to the table.
@@ -126,7 +126,7 @@ function renderTableFooter() {// to create the last row and append the table wit
 
   }
   table.appendChild(rowFooter);
-};
+}
 
 
 //create instances from Shop constructor:
