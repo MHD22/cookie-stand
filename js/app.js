@@ -17,7 +17,7 @@ function Shop(location, minCustomer, maxCoustomer, avgCookiesPerCoust) {
   this.minCoust = minCustomer;
   this.maxCoust = maxCoustomer;
   this.avgCookies = avgCookiesPerCoust;
-  this.cookiesSaledArray = []
+  this.cookiesSaledArray = [];
   this.total = 0;
   shops.push(this);//store this object in the shops array.
 }
@@ -40,7 +40,7 @@ Shop.prototype.storeDataPerHour = function () {
   }
 
   allTotalsForEachHour[i] += this.total; // add the total for all locations each day
-}
+};
 
 // prototype for render each location in a row
 Shop.prototype.render = function () {
@@ -70,9 +70,9 @@ Shop.prototype.render = function () {
   }
   table.appendChild(rowLocation); // append the table with this location row
 
-}
+};
 
-//DOM 
+//DOM
 var container = document.getElementById('sales');// get main element from html to append it with the table at the end.
 var table = document.createElement('table');//create table element to hold the data.
 table.setAttribute('border', '1');// set the border attribute to the table.
@@ -106,9 +106,10 @@ function renderTableHeader() { // to create the first row and append the table w
 
 }
 
+var rowFooter;// made it global for use it inside the event listener 'submit'.
 
 function renderTableFooter() {// to create the last row and append the table with it.
-  var rowFooter = document.createElement('tr');
+  rowFooter = document.createElement('tr');
 
   for (var i = 0; i < hours.length + 2; i++) { //loop over columns (16) 
 
@@ -126,7 +127,7 @@ function renderTableFooter() {// to create the last row and append the table wit
 
   }
   table.appendChild(rowFooter);
-};
+}
 
 
 //create instances from Shop constructor:
@@ -135,6 +136,37 @@ var dubai = new Shop('Dubai', 11, 38, 3.7);
 var paris = new Shop('Paris', 20, 38, 2.3);
 var lima = new Shop('Lima', 2, 16, 4.6);
 var tokyo = new Shop('Tokyo', 3, 24, 1.2);
+
+
+
+//add objects from the users' input into the form:
+//event listener to form 
+var branchForm = document.getElementById('branchForm');
+// when the form is submitted, it will create a new Shop object.(after the validation of data).
+branchForm.addEventListener('submit', (event)=> { 
+    event.preventDefault();
+    var form = event.target;
+    var locationName= form.loc.value;
+    var minCust =Number(form.min.value);
+    var maxCust = Number(form.max.value);
+    var avgCookies =parseFloat( form.avg.value);
+
+    // input validation:
+    if(minCust < 0 || maxCust<=0 || minCust >= maxCust ){ 
+      alert(`Something was wrong! \n* don't enter a negative number for min or max \n* the max number should be greater than zero \n* finally the min can't be greater than max \n \n - check these conditions, and try to submit again, please.`);
+    }
+
+    else{ //if everything valid..
+
+      var newShop = new Shop(locationName, minCust, maxCust, avgCookies);
+      table.removeChild(rowFooter);
+      newShop.storeDataPerHour();
+      newShop.render();
+      renderTableFooter();
+    }
+    form.reset();     
+});
+
 
 
 //render the table header and lacations rows and table footer.

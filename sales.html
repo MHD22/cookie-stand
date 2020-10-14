@@ -11,12 +11,25 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    
                 </ul>
             </nav>
     </header>
-    <main id='sales'>
-       
+    <main id="sales">
+    
+    <form id="branchForm">
+        <fieldset>
+            <legend>Add A Branch</legend>
+            <label for="loc">Location: </label>
+            <input type="text" name="loc" id="loc" required><br>
+            <label for="min">Minimum Hourly Customer: </label>
+            <input class="number" type="number" name="min" id="min" required><br>
+            <label for="max">Maximum Hourly Customer: </label>
+            <input class="number" type="number" name="max" id="max" required><br>
+            <label for="avg">Average Hourly Cookies: </label>
+            <input class="number" type="text" name="avg" id="avg" required><br>
+            <input class="submit" type="submit" value="Add The Branch">
+        </fieldset>
+    </form>    
     </main>
     <footer></footer>
 
